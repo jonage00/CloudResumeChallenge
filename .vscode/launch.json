@@ -6,12 +6,14 @@
     "configurations": [
         {
             "type": "node",
+            "runtimeExecutable": "node",
             "request": "launch",
             "name": "Launch Program",
             "skipFiles": [
                 "<node_internals>/**"
             ],
             "program": "${workspaceFolder}\\frontend\\main.js"
+            
         }
     ]
 }

@@ -1,18 +1,18 @@
 window.addEventListener('DOMContentLoaded', (event) =>{
     getVisitCount();
-});
+})
 
-const functionApi = 'http://localhost:7071/api/ResumeCounterFromQueryString';
+const functionApi = 'https://resumecountercrc-python.azurewebsites.net/api/VisitorCounter?';
 
 const getVisitCount = () => {
-    let count = 30; 
+    let count = 0; 
     fetch(functionApi).
     then(response => {
-        return response.json()
+        return response.text()
     })
-    .then(response =>{
+    .then(text =>{
         console.log("Website called function API.");
-        count = response.count;
+        count = text;
         document.getElementById("counter").innerText = count;
     }).catch(function(error) {
         console.log(error);
