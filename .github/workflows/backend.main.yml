@@ -1,0 +1,58 @@
+name: Deploy Python project to function app
+
+on:
+  [push]
+  branches: [ main ]
+  paths:
+  - 'backend/**'
+
+env:
+  AZURE_FUNCTIONAPP_NAME: ResumeCounterCRC-Python # set this to your application's name
+  AZURE_FUNCTIONAPP_PACKAGE_PATH: 'backend-new'   # set this to the path to your web app project, defaults to the repository root
+  PYTHON_VERSION: '3.7'                 # set this to the Python version to use (supports 3.6, 3.7, 3.8)
+
+jobs:
+cypress-run:
+    runs-on: ubuntu-latest
+    container: cypress/browsers:node12.18.3-chrome87-ff82
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      # Install NPM dependencies, cache them correctly
+      # and run all Cypress tests
+      - name: Cypress run
+        uses: cypress-io/github-action@v5.0.5 # use the explicit version number
+        with:
+          # Specify Browser since container image is compile with Firefox
+          browser: firefox
+
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: 'Checkout GitHub action'
+      uses: actions/checkout@v2
+
+     -name: 'Login via Azure CLI'
+      uses: azure/login@v1
+      with:
+      creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Setup Python ${{ env.PYTHON_VERSION }} Environment
+      uses: actions/setup-python@v1
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+
+    - name: 'Resolve Project Dependencies Using Pip'
+      shell: bash
+      run: |
+        pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/VisitorCounter'
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt --target=".python_packages/lib/site-packages"
+        popd
+    - name: 'Run Azure Functions action'
+      uses: Azure/functions-action@v1
+      with:
+        app-name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
+        package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/VisitorCounter
+  
