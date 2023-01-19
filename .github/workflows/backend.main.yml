@@ -2,9 +2,9 @@ name: Deploy_backend
 
 on:
   push:
-  branches: [ main ]
-  paths:
-  - 'backend-new/**'
+      branches: [ main ]
+      paths:
+      - 'backend-new/**'
 
 env:
   AZURE_FUNCTIONAPP_NAME: ResumeCounterCRC-Python # set this to your application's name
