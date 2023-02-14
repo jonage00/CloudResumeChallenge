@@ -2,7 +2,7 @@ window.addEventListener('DOMContentLoaded', (event) =>{
     getVisitCount();
 })
 
-const functionApi = 'https://resumecountercrc-python.azurewebsites.net/api/VisitorCounter?';
+const functionApi = 'https://countercrc-python.azurewebsites.net/api/VisitorCounter?';
 
 const getVisitCount = () => {
     let count = 0; 
