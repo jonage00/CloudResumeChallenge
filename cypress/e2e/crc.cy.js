@@ -12,7 +12,7 @@ describe('Visitor Counter Test', () => {
     cy.request('https://resumecountercrc-python.azurewebsites.net/api/VisitorCounter')
       .then((response) => {
         const updatedCount = parseInt(response.body);
-        expect(updatedCount).to.be.greaterThan(initialCount);
+        expect(updatedCount).to.equal(initialCount + 1);
       });
   });
 });
