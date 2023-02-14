@@ -7,7 +7,7 @@ on:
       - 'backend-new/**'
 
 env:
-  AZURE_FUNCTIONAPP_NAME: ResumeCounterCRC-Python # set this to your application's name
+  AZURE_FUNCTIONAPP_NAME: CounterCRC-Python # set this to your application's name
   AZURE_FUNCTIONAPP_PACKAGE_PATH: 'backend-new'   # set this to the path to your web app project, defaults to the repository root
   PYTHON_VERSION: '3.7'                 # set this to the Python version to use (supports 3.6, 3.7, 3.8)
 
